@@ -170,6 +170,8 @@ meanValues <- function(path = ".", writeToFile = TRUE) {
     val <- gsub("Acc", "Accelerometer", val)
     ## Replace Gyro by Gyroscope
     val <- gsub("Gyro", "Gyroscope", val)
+    val <- gsub("^t", "Time.", val)
+    val <- gsub("^f", "FastFourierTransform.", val)
     val
   })) 
   
