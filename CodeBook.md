@@ -13,7 +13,7 @@ All value units were already normalized; therfore no unit is attached to this va
 - appending .Mean to all values
 
 The list of value:
-
+```
 [1] "SubjectID"                                           
 [2] "Activity"                                            
 [3] "tBodyAccelerometer.Mean.X.Mean"                      
@@ -82,3 +82,4 @@ The list of value:
 [66] "fBodyBodyGyroscopeMag.StandardDeviation.Mean"        
 [67] "fBodyBodyGyroscopeJerkMag.Mean.Mean"                 
 [68] "fBodyBodyGyroscopeJerkMag.StandardDeviation.Mean"  
+```
