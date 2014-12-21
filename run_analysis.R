@@ -116,6 +116,7 @@ loadTrainLabels <- function(path) {
 ## 5.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
 ##
 ## path - pat which contains "UCI HAR Dataset" data
+## writeToFile - write created dataset into "datamean.txt" file. Default value is FALSE 
 meanValues <- function(path, writeToFile = FALSE) {
   dataPath <- paste(path, "UCI HAR Dataset", sep = "\\")
   #######################################################################
