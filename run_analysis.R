@@ -1,4 +1,5 @@
 library(data.table)
+library(plyr)
 
 dataPath <- ".\\data\\UCI HAR Dataset"
 
@@ -136,4 +137,17 @@ setnames(data, 3:563, features[[2]])
 data <- data[, grepl("-std\\(\\)|-mean\\(\\)|ID", colnames(data), ignore.case = TRUE), with=FALSE]
 
 #######################################################################
-## 3.Uses descriptive activity names to name the activities in the data set 
+## 3.Uses descriptive activity names to name the activities in the data set
+match.idx <- match(data$ActivityID, activities$ID)
+data$ActivityID <- ifelse(is.na(match.idx), data$ActivityID, activities$Name[match.idx])
+setnames(data, 2, "Activity")
+
+#######################################################################
+## 4.Appropriately labels the data set with descriptive variable names
+## This step is already done in step 1
+
+
+
+
+
+
