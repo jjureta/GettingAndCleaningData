@@ -1,4 +1,5 @@
 library(data.table)
+library(plyr)
 library(dplyr)
 
 
@@ -7,7 +8,7 @@ library(dplyr)
 #
 # path - path where is the file activity_labels.txt
 loadActivities <- function(path) {
-  activityLabelsFilePath <- paste0(dataPath, "\\activity_labels.txt")
+  activityLabelsFilePath <- paste0(path, "\\activity_labels.txt")
   activityLabels <- fread(activityLabelsFilePath)
   ## add header
   setnames(activityLabels, 1:2, c("ID", "Name"))
@@ -17,7 +18,7 @@ loadActivities <- function(path) {
 ##
 ## path - path where is the file features.txt
 loadFeatures <- function(path) {
-  featuresFilePath <- paste0(dataPath, "\\features.txt")
+  featuresFilePath <- paste0(path, "\\features.txt")
   featuresLabels <- fread(featuresFilePath)
   ## add header
   setnames(featuresLabels, 1:2, c("ID", "Name"))
@@ -117,7 +118,7 @@ loadTrainLabels <- function(path) {
 ##
 ## path - pat which contains "UCI HAR Dataset" data
 ## writeToFile - write created dataset into "datamean.txt" file. Default value is FALSE 
-meanValues <- function(path, writeToFile = FALSE) {
+meanValues <- function(path = "", writeToFile = FALSE) {
   dataPath <- paste(path, "UCI HAR Dataset", sep = "\\")
   #######################################################################
   ## 1.Merges the training and the test sets to create one data set.
