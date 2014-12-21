@@ -7,6 +7,20 @@ run_analysis.R is a single script that has two major functions:
 * create tiddy data
 * calculate the mean of the mean and the standard deviation columns
 
+The scrip perform multiple steps:
+1. load the definition of activities and features (see files activity_labels.txt and features.txt in "UCI HAR Dataset" folder)
+2. load subjects, measures and labels (see files subjects_test.txt, X_test.txt and y_test.txt in the test folder) of test data 
+3. create test data set with cbind of subjects, measures and labels
+4. load subjects, measures and labels (see files subjects_train.txt, X_train.txt and y_train.txt in the train folder) of train data 
+5. create train data set with cbind of subjects, measures and labels
+6. merge test and train data by using rbind
+7. remove all columns but those contining either -std() or -mean
+8. replace the acivity id column by activity which contains textual description of the activities (see file activity_labels.txt)
+9. Clean column names by replacing std() by StandardDeviation, mean() by Mean, - by ., Acc by Accelerometer and Gyro by Gyroscope.
+10. calculate the mean on all column values excpt SubjectID and Activity.
+11. Rename columns by appending .Mean
+12. If specified so ,the resulting data set is saved in a file.
+
 # Installation
 
 Run source('run_analysis.R').
