@@ -1,20 +1,31 @@
----
-title: "README.md"
-output: pdf_document
----
+# run_analysis.R
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+A command line tool to create and summarise tiddy data from "UCI HAR Dataset" 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+run_analysis.R is a single script that has two major functions:
 
-```{r}
-summary(cars)
-```
+* create tiddy data
+* calculate the mean of the mean and the standard deviation columns
 
-You can also embed plots, for example:
+# Installation
 
-```{r, echo=FALSE}
-plot(cars)
-```
+Run source('run_analysis.R').
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+This script depends on following packages :
+- data.table
+- dplyr
+
+# Data set
+
+Data set used by this script must be downloaded from [here](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip ) and unzipped into local folder.
+
+More information on this data set can be found [here] (http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones#).
+
+License:
+Use of this dataset in publications must be acknowledged by referencing the following publication [1] 
+
+[1] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+
+This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
+
+Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
