@@ -39,4 +39,4 @@ After run_analysis.R is sourced meanValues function must be called with two para
 Sample: 
 ```{r}
 meanValues("\\data", writeToFile = TRUE)
-```{r}
+
