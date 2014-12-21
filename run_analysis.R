@@ -1,8 +1,5 @@
 library(data.table)
-library(plyr)
 library(dplyr)
-
-dataPath <- ".\\data\\UCI HAR Dataset"
 
 
 #################################################
@@ -111,67 +108,79 @@ loadTrainLabels <- function(path) {
 }
 
 #######################################################################
+## This function:
 ## 1.Merges the training and the test sets to create one data set.
-activities <- loadActivities(dataPath)
-features <- loadFeatures(dataPath)
-
-# Load test data
-testSubjects <- loadTestSubjects(dataPath)
-testMeasures <- loadTestMeasures(dataPath)
-testLabels <- loadTestLabels(dataPath)
-testData <- cbind(testSubjects, testLabels, testMeasures)
-
-# Load train data
-trainSubjects <- loadTrainSubjects(dataPath)
-trainMeasures <- loadTrainMeasures(dataPath)
-trainLabels <- loadTrainLabels(dataPath)
-trainData <- cbind(trainSubjects, trainLabels, trainMeasures)
-
-data <- rbind(testData, trainData)
-
-setnames(data, 3:563, features[[2]])
-
-#######################################################################
-## 2.Extracts only the measurements on the mean and standard deviation 
-## for each measurement. 
-## Keep columns: SubjectID, ActivityID and all other columns containing std() or mean() 
-data <- data[, grepl("-std\\(\\)|-mean\\(\\)|ID", colnames(data), ignore.case = TRUE), with=FALSE]
-
-#######################################################################
+## 2.Extracts only the measurements on the mean and standard deviation for each measurement. 
 ## 3.Uses descriptive activity names to name the activities in the data set
-match.idx <- match(data$ActivityID, activities$ID)
-data$ActivityID <- ifelse(is.na(match.idx), data$ActivityID, activities$Name[match.idx])
-setnames(data, 2, "Activity")
-
-#######################################################################
-## 4.Appropriately labels the data set with descriptive variable names
-columnNames <- names(data)
-
-setnames(data, 3:68, sapply(columnNames[3:68], function(val) {
-  ## Remove () from column name
-  val <- gsub("\\(\\)", "", val) 
-  ## Replace - by . in column name
-  val <- gsub("-", ".", val)
-  ## Replace .std by .StandardDeviation
-  val <- gsub("\\.std", "\\.StandardDeviation", val)
-  ## Replace .mean by .Mean
-  val <- gsub("\\.mean", "\\.Mean", val)
-  ## Replace Acc by Accelerometer
-  val <- gsub("Acc", "Accelerometer", val)
-  ## Replace Gyro by Gyroscope
-  val <- gsub("Gyro", "Gyroscope", val)
-  val
-})) 
-
-#######################################################################
-## 5.From the data set in step 4, creates a second, independent tidy 
-## data set with the average of each variable for each activity and each subject.
-columnNames <- names(data)
-datamean <- ddply(data,.(SubjectID, Activity),colwise(mean, columnNames[3:68]))
-
-
-
-
-
-
+## 4.Appropriately labels the data set with descriptive variable names. 
+## 5.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
+##
+## path - pat which contains "UCI HAR Dataset" data
+meanValues <- function(path) {
+  dataPath <- paste(path, "UCI HAR Dataset", sep = "\\")
+  #######################################################################
+  ## 1.Merges the training and the test sets to create one data set.
+  activities <- loadActivities(dataPath)
+  features <- loadFeatures(dataPath)
+  
+  # Load test data
+  testSubjects <- loadTestSubjects(dataPath)
+  testMeasures <- loadTestMeasures(dataPath)
+  testLabels <- loadTestLabels(dataPath)
+  testData <- cbind(testSubjects, testLabels, testMeasures)
+  
+  # Load train data
+  trainSubjects <- loadTrainSubjects(dataPath)
+  trainMeasures <- loadTrainMeasures(dataPath)
+  trainLabels <- loadTrainLabels(dataPath)
+  trainData <- cbind(trainSubjects, trainLabels, trainMeasures)
+  
+  data <- rbind(testData, trainData)
+  
+  setnames(data, 3:563, features[[2]])
+  
+  #######################################################################
+  ## 2.Extracts only the measurements on the mean and standard deviation 
+  ## for each measurement. 
+  ## Keep columns: SubjectID, ActivityID and all other columns containing std() or mean() 
+  data <- data[, grepl("-std\\(\\)|-mean\\(\\)|ID", colnames(data), ignore.case = TRUE), with=FALSE]
+  
+  #######################################################################
+  ## 3.Uses descriptive activity names to name the activities in the data set
+  match.idx <- match(data$ActivityID, activities$ID)
+  data$ActivityID <- ifelse(is.na(match.idx), data$ActivityID, activities$Name[match.idx])
+  setnames(data, 2, "Activity")
+  
+  #######################################################################
+  ## 4.Appropriately labels the data set with descriptive variable names
+  columnNames <- names(data)
+  
+  setnames(data, 3:68, sapply(columnNames[3:68], function(val) {
+    ## Remove () from column name
+    val <- gsub("\\(\\)", "", val) 
+    ## Replace - by . in column name
+    val <- gsub("-", ".", val)
+    ## Replace .std by .StandardDeviation
+    val <- gsub("\\.std", "\\.StandardDeviation", val)
+    ## Replace .mean by .Mean
+    val <- gsub("\\.mean", "\\.Mean", val)
+    ## Replace Acc by Accelerometer
+    val <- gsub("Acc", "Accelerometer", val)
+    ## Replace Gyro by Gyroscope
+    val <- gsub("Gyro", "Gyroscope", val)
+    val
+  })) 
+  
+  #######################################################################
+  ## 5.From the data set in step 4, creates a second, independent tidy 
+  ## data set with the average of each variable for each activity and each subject.
+  columnNames <- names(data)
+  datamean <- ddply(data,.(SubjectID, Activity),colwise(mean, columnNames[3:68]))
+  
+  setnames(datamean, 3:68, sapply(columnNames[3:68], function(val) {
+    paste(val, "Mean", sep = ".")
+  })) 
+  
+  datamean
+}
 
