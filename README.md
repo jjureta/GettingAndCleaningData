@@ -48,8 +48,8 @@ Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012
 # How to run
 
 After run_analysis.R is sourced meanValues function must be called with two parameters:
-- path - path to folder where is "UCI HAR Dataset" dataset
-- writeToFile - write created dataset into "datamean.txt" file. The file is writen in the folder defined by path variable. Default value is FALSE.
+- path - path to folder where is "UCI HAR Dataset" dataset. Default value is current working directory.
+- writeToFile - write created dataset into "datamean.txt" file. The file is writen in the folder defined by path variable. Default value is TRUE.
 
 Sample: 
 ```{r}

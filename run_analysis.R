@@ -118,7 +118,7 @@ loadTrainLabels <- function(path) {
 ##
 ## path - pat which contains "UCI HAR Dataset" data
 ## writeToFile - write created dataset into "datamean.txt" file. Default value is FALSE 
-meanValues <- function(path = "", writeToFile = FALSE) {
+meanValues <- function(path = ".", writeToFile = TRUE) {
   dataPath <- paste(path, "UCI HAR Dataset", sep = "\\")
   #######################################################################
   ## 1.Merges the training and the test sets to create one data set.
