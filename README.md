@@ -8,6 +8,7 @@ run_analysis.R is a single script that has two major functions:
 * calculate the mean of the mean and the standard deviation columns
 
 The scrip perform multiple steps:
+
 1. load the definition of activities and features (see files activity_labels.txt and features.txt in "UCI HAR Dataset" folder)
 2. load subjects, measures and labels (see files subjects_test.txt, X_test.txt and y_test.txt in the test folder) of test data 
 3. create test data set with cbind of subjects, measures and labels
