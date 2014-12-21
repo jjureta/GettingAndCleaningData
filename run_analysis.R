@@ -1,5 +1,6 @@
 library(data.table)
 library(plyr)
+library(dplyr)
 
 dataPath <- ".\\data\\UCI HAR Dataset"
 
@@ -144,20 +145,29 @@ setnames(data, 2, "Activity")
 
 #######################################################################
 ## 4.Appropriately labels the data set with descriptive variable names
-## This step is already done in step 1
+columnNames <- names(data)
 
-## Remove () from column name
-setnames(data, 1:68, sapply(names(data), function(val) { gsub("\\(\\)", "", val) }))
-## Replace - by . in column name
-setnames(data, 1:68, sapply(names(data), function(val) { gsub("-", ".", val) }))
-## Replace .std by .StandardDeviation
-setnames(data, 1:68, sapply(names(data), function(val) { gsub("\\.std", "\\.StandardDeviation", val) }))
-## Replace .mean by .Mean
-setnames(data, 1:68, sapply(names(data), function(val) { gsub("\\.mean", "\\.Mean", val) }))
+setnames(data, 3:68, sapply(columnNames[3:68], function(val) {
+  ## Remove () from column name
+  val <- gsub("\\(\\)", "", val) 
+  ## Replace - by . in column name
+  val <- gsub("-", ".", val)
+  ## Replace .std by .StandardDeviation
+  val <- gsub("\\.std", "\\.StandardDeviation", val)
+  ## Replace .mean by .Mean
+  val <- gsub("\\.mean", "\\.Mean", val)
+  ## Replace Acc by Accelerometer
+  val <- gsub("Acc", "Accelerometer", val)
+  ## Replace Gyro by Gyroscope
+  val <- gsub("Gyro", "Gyroscope", val)
+  val
+})) 
 
 #######################################################################
 ## 5.From the data set in step 4, creates a second, independent tidy 
 ## data set with the average of each variable for each activity and each subject.
+columnNames <- names(data)
+datamean <- ddply(data,.(SubjectID, Activity),colwise(mean, columnNames[3:68]))
 
 
 
